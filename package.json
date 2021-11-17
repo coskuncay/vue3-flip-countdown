@@ -1,24 +1,61 @@
 {
   "name": "vue3-flip-countdown",
-  "version": "0.1.0",
-  "private": true,
+  "version": "0.1.1",
+  "description": "Countdown timer with Flip Animation for Vue 3.x",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/coskuncayemre/vue3-flip-countdown.git"
+  },
+  "bugs": {
+    "url": "https://github.com/coskuncayemre/vue3-flip-countdown/issues"
+  },
+  "homepage": "https://github.com/coskuncayemre/vue3-flip-countdown#readme",
+  "keywords": [
+    "vue3",
+    "javascript",
+    "vue",
+    "vuejs",
+    "vuejs3",
+    "countdown",
+    "flip-countdown",
+    "timer"
+  ],
+  "author": "Emre Coşkunçay",
+  "license": "MIT",
+  "private": false,
+  "main": "dist/vue3-flip-countdown.js",
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "build": "vue-cli-service build --target lib --name vue3-flip-countdown src/index.js",
     "lint": "vue-cli-service lint"
   },
+  "files": [
+    "dist/*",
+    "src/*",
+    "public/*",
+    "*.json",
+    "*.js"
+  ],
   "dependencies": {
-    "core-js": "^3.6.5",
     "vue": "^3.0.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
-    "@vue/compiler-sfc": "^3.0.0",
+    "@vue/compiler-sfc": "~3.0.0",
     "babel-eslint": "^10.1.0",
+    "core-js": "^3.6.5",
+    "css-loader": "^6.5.1",
     "eslint": "^6.7.2",
-    "eslint-plugin-vue": "^7.0.0"
+    "eslint-plugin-vue": "^7.0.0",
+    "less": "^4.1.2",
+    "less-loader": "^5.0.0",
+    "moment": "^2.29.1",
+    "node-sass": "^4.14.1",
+    "sass": "^1.34.1",
+    "sass-loader": "^10.1.1",
+    "style-loader": "^3.3.1"
   },
   "eslintConfig": {
     "root": true,

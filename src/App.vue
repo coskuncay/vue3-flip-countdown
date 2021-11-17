@@ -1,15 +1,14 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <Countdown deadline="2021-12-12 00:00:00" />
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Countdown from './Countdown.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    Countdown
   }
 }
 </script>
