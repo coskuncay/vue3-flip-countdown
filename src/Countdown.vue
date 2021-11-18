@@ -3,18 +3,17 @@
     <template v-for="data in timeData" :key="data.label">
         <span class="flip-clock__piece" :id="data.elementId" v-show="data.show">
             <div v-if="flipAnimation">
-                <span class="flip-clock__card flip-card">
+                <span class="flip-clock__card flip-card" :style="countdownSize ? `font-size:${countdownSize}` : ''">
                     <b class="flip-card__top">{{twoDigits(data.current)}}</b>
                     <b class="flip-card__bottom" :data-value="twoDigits(data.current)"></b>
                     <b class="flip-card__back" :data-value="twoDigits(data.previous)"></b>
                     <b class="flip-card__back-bottom" :data-value="twoDigits(data.previous)"></b>
                 </span>
-                <span class="flip-clock__slot">{{ data.label }}</span>
             </div>
             <div v-else>
-                <span class="flip-clock__slot">{{ data.label }}</span>
                 <span class="no-animation__card">{{twoDigits(data.current)}}</span>
             </div>
+            <span v-if="showLabels" class="flip-clock__slot" :style="labelSize ? `font-size:${labelSize}` : ''">{{ data.label }}</span>
         </span>
     </template>
 </div>
@@ -32,8 +31,8 @@ import {
 } from 'vue'
 
 import moment from "moment";
-const uuidv4 = require('uuid/v4');
 const fmt = "YYYY-MM-DD HH:mm:ss";
+const uuidv4 = require('uuid/v4');
 
 export default {
     name: 'vue3-flip-countdown',
@@ -47,6 +46,8 @@ export default {
             showMinutes,
             showSeconds,
             labels,
+            deadlineDate,
+            deadlineISO
         } = toRefs(props);
 
         let now = ref(Math.trunc(new Date().getTime() / 1000));
@@ -149,6 +150,7 @@ export default {
         }
 
         watch(deadline, (newVal) => {
+            console.log("🚀 ~ file: Countdown.vue ~ line 151 ~ watch ~ newVal", newVal)
             const endTime = newVal;
             date.value = Math.trunc(Date.parse(endTime.replace(/-/g, '/')) / 1000);
             if (!date.value) {
@@ -198,7 +200,14 @@ export default {
                 throw new Error("Missing props 'deadline'");
             }
             const endTime = deadline.value;
-            date.value = Math.trunc(Date.parse(endTime.replace(/-/g, '/')) / 1000);
+            let epoch = Date.parse(endTime.replace(/-/g, '/'));
+            if(deadlineDate.value != null){
+                epoch = Date.parse(deadlineDate.value)
+            }
+            if(deadlineISO.value){
+                epoch = Date.parse(deadlineISO.value);
+            }
+            date.value = Math.trunc(epoch/ 1000);
             if (!date.value) {
                 throw new Error("Invalid props value, correct the 'deadline'");
             }
@@ -228,16 +237,38 @@ export default {
     props: {
         deadline: {
             type: String,
+            required: false,
             default: moment()
-                .add(999, "d")
+                .add(32, "d")
                 .add(10, "s")
                 .format(fmt),
         },
+        deadlineISO: {
+            type: String,
+            required: false,
+        },
+        deadlineDate: {
+            type: Date,
+            required: false,
+        },
+        countdownSize:{
+            type:String,
+            required:false,
+            // default:"2.2rem"
+        },
+        
+        labelSize:{
+            type:String,
+            required:false,
+            // default:"2.2rem"
+        },
         stop: {
             type: Boolean,
+            required: false,
         },
         flipAnimation: {
             type: Boolean,
+            required: false,
             default: true,
         },
         showDays: {
@@ -256,6 +287,11 @@ export default {
             default: true,
         },
         showSeconds: {
+            type: Boolean,
+            required: false,
+            default: true,
+        },
+        showLabels: {
             type: Boolean,
             required: false,
             default: true,
