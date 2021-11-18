@@ -12,6 +12,16 @@
  </p>
 
 
+## Table of contents
+
+- [Installation](#installation)
+- [Global Usage](#global-usage)
+- [Single File Component Usage](#single-file-component-usage)
+- [Props](#props)
+- [License](#license)
+
+
+
 ## Installation
 
 ```
@@ -97,4 +107,6 @@ export default {
 
 ## License
 
-**MIT** (c) Emre Coşkunçay
+[MIT](https://choosealicense.com/licenses/mit/)
+
+Copyright (c) 2021, [Emre Coşkunçay](https://github.com/coskuncayemre)
