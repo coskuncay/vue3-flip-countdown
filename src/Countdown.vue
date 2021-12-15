@@ -36,7 +36,10 @@ const uuidv4 = require('uuid/v4');
 
 export default {
     name: 'vue3-flip-countdown',
-    setup(props) {
+    emits: ["timeElapsed"],
+    setup(props, {
+        emit
+    }) {
         const uuid = uuidv4();
         const {
             deadline,
@@ -93,10 +96,14 @@ export default {
         }
 
         const twoDigits = (value) => {
-            if (value.toString().length <= 1) {
-                return '0' + value.toString();
+            if (value != undefined) {
+                if (value.toString().length <= 1) {
+                    return '0' + value.toString();
+                }
+                return value.toString();
+            } else {
+                return '00';
             }
-            return value.toString();
         }
 
         const updateTime = (idx, newValue) => {
@@ -130,7 +137,6 @@ export default {
                             if (newValue.value / 1000 >= 1) {
                                 if (!cls.includes('-4digits')) {
                                     const newCls = cls + '-4digits';
-                                    console.log("🚀 ~ file: Countdown.vue ~ line 135 ~ updateTime ~ newCls", newCls)
                                     e.classList.add(newCls);
                                     e.classList.remove(cls);
                                 }
@@ -143,14 +149,13 @@ export default {
                             }
                         }
                     } else {
-                        console.log("yoook")
+                        //
                     }
                 }
             }
         }
 
         watch(deadline, (newVal) => {
-            console.log("🚀 ~ file: Countdown.vue ~ line 151 ~ watch ~ newVal", newVal)
             const endTime = newVal;
             date.value = Math.trunc(Date.parse(endTime.replace(/-/g, '/')) / 1000);
             if (!date.value) {
@@ -169,8 +174,8 @@ export default {
         })
 
         watch(diff, (newVal) => {
-            if (newVal === 0) {
-                // $emit('timeElapsed');
+            if (newVal == 0) {
+                emit('timeElapsed');
                 updateAllCards();
             }
         })
@@ -201,13 +206,13 @@ export default {
             }
             const endTime = deadline.value;
             let epoch = Date.parse(endTime.replace(/-/g, '/'));
-            if(deadlineDate.value != null){
+            if (deadlineDate.value != null) {
                 epoch = Date.parse(deadlineDate.value)
             }
-            if(deadlineISO.value){
+            if (deadlineISO.value) {
                 epoch = Date.parse(deadlineISO.value);
             }
-            date.value = Math.trunc(epoch/ 1000);
+            date.value = Math.trunc(epoch / 1000);
             if (!date.value) {
                 throw new Error("Invalid props value, correct the 'deadline'");
             }
@@ -232,6 +237,7 @@ export default {
             show,
             timeData,
             twoDigits,
+            emit,
         }
     },
     props: {
@@ -251,15 +257,15 @@ export default {
             type: Date,
             required: false,
         },
-        countdownSize:{
-            type:String,
-            required:false,
+        countdownSize: {
+            type: String,
+            required: false,
             // default:"2.2rem"
         },
-        
-        labelSize:{
-            type:String,
-            required:false,
+
+        labelSize: {
+            type: String,
+            required: false,
             // default:"2.2rem"
         },
         stop: {

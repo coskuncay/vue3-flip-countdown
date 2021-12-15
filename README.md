@@ -29,6 +29,7 @@
 - [Installation](#installation)
 - [Global Usage](#global-usage)
 - [Single File Component Usage](#single-file-component-usage)
+- [Emits](#emits)
 - [Props](#props)
 - [References](#references)
 - [Requirements](#requirements)
@@ -81,6 +82,12 @@ export default {
 }
 </script>
 ```
+
+## Emits
+
+| Name | Description | 
+| --- | --- |
+| timeElapsed | event that created when the time came | 
 
 ## Props
 
