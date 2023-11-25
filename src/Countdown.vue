@@ -50,7 +50,8 @@
                 showSeconds,
                 labels,
                 deadlineDate,
-                deadlineISO
+                deadlineISO, 
+                countUp
             } = toRefs(props);
     
             let now = ref(Math.trunc(new Date().getTime() / 1000));
@@ -165,8 +166,16 @@
     
             // Runs when current time changes
             watch(now, () => {
-                diff.value = now.value -  date.value;
-                if (stop.value) {
+                if (countUp.value == false)
+                {
+                    diff.value = date.value - now.value;
+                }
+                else
+                {
+                    diff.value = now.value - date.value;
+                }
+
+                if ((countUp.value == false && diff.value <= 0) || stop.value) {
                     // Check if stop.value is true
                     diff.value = 0;
                     // Set the seconds card to 0
@@ -177,8 +186,6 @@
             })
     
             // Runs when time diff changes
-            // Not needed for a countup component
-            /*
             watch(diff, (newVal) => {
                 if (newVal == 0) {
                     // Emit timeElapsed event when deadline is reached
@@ -186,7 +193,7 @@
                     updateAllCards();
                 }
             })
-            */
+            
     
             let seconds = computed(() => {
                 return Math.trunc(diff.value) % 60;
@@ -309,6 +316,11 @@
                 type: Boolean,
                 required: false,
                 default: true,
+            },
+            countUp: {
+                type: Boolean,
+                required: false,
+                default: false
             },
             labels: {
                 type: Object,
