@@ -99,6 +99,7 @@ export default {
 | countdownSize | String | 3rem | 
 | labelSize | String | 1.2rem | 
 | flipAnimation | Boolean | true |
+| countUp | Boolean | false |
 | mainColor | String | '#EC685C' |
 | secondFlipColor | String | props.mainColor | 
 | mainFlipBackgroundColor | String | '#222222' | 
