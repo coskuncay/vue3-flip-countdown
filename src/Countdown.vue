@@ -432,7 +432,7 @@
         backface-visibility: hidden;
         -webkit-backface-visibility: hidden;
         transform-style: preserve-3d;
-        width: 2.1em;
+        width: 2.4em;
         height: @halfHeight;
     }
     
